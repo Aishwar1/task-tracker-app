@@ -112,32 +112,6 @@ Run:
 npm start
 ```
 
-Frontend:
-
-```text
-http://localhost:3000
-```
-
----
-
-## Live Demo
-
-Frontend:
-
-ADD_FRONTEND_LINK
-
-Backend:
-
-ADD_BACKEND_LINK
-
----
-
-## Screenshots
-
-Optional
-
----
-
 ## Author
 
 Aishwar Bhatnagar
