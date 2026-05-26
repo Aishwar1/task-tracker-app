@@ -21,6 +21,8 @@ function Auth() {
             [e.target.name]:e.target.value
         });
 
+        setMessage("");
+
     };
 
     const handleSubmit = async(e)=>{
@@ -67,17 +69,17 @@ function Auth() {
                 error?.response?.data?.message;
 
             if(
-                msg==="User not found"
+                msg === "User not found"
             ){
 
                 setMessage(
-                    "No account found. Please register first."
+                    "You need to create an account first."
                 );
 
             }
 
             else if(
-                msg==="Invalid credentials"
+                msg === "Invalid credentials"
             ){
 
                 setMessage(
@@ -87,7 +89,7 @@ function Auth() {
             }
 
             else if(
-                msg==="User already exists"
+                msg === "User already exists"
             ){
 
                 setMessage(
