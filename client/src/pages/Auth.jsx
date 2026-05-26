@@ -32,9 +32,9 @@ function Auth() {
 
             const url = isLogin
 
-                ? "http://localhost:5000/auth/login"
+                ? "https://task-tracker-app-2lo6.onrender.com/auth/login"
 
-                : "http://localhost:5000/auth/signup";
+                : "https://task-tracker-app-2lo6.onrender.com/auth/signup";
 
             const res = await axios.post(
                 url,

@@ -30,7 +30,7 @@ function Dashboard() {
     const fetchTasks = async () => {
         try {
             const res = await axios.get(
-                "http://localhost:5000/tasks",
+                "https://task-tracker-app-2lo6.onrender.com/tasks",
                 {
                     headers:{
                         Authorization:token
@@ -48,7 +48,7 @@ function Dashboard() {
         try{
 
             const res = await axios.get(
-                "http://localhost:5000/timelog",
+                "https://task-tracker-app-2lo6.onrender.com/timelog",
                 {
                     headers:{
                         Authorization:token
@@ -70,7 +70,7 @@ function Dashboard() {
         try{
 
             const res = await axios.get(
-                "http://localhost:5000/summary",
+                "https://task-tracker-app-2lo6.onrender.com/summary",
                 {
                     headers:{
                         Authorization:token
@@ -133,7 +133,7 @@ function Dashboard() {
         try{
 
             await axios.post(
-                "http://localhost:5000/tasks",
+                "https://task-tracker-app-2lo6.onrender.com/tasks",
                 {
                     title,
                     description
@@ -162,7 +162,7 @@ function Dashboard() {
         try{
 
             await axios.put(
-                `http://localhost:5000/tasks/${editingId}`,
+                `https://task-tracker-app-2lo6.onrender.com/tasks/${editingId}`,
                 {
                     title,
                     description
@@ -192,7 +192,7 @@ function Dashboard() {
         try{
 
             await axios.delete(
-                `http://localhost:5000/tasks/${id}`,
+                `https://task-tracker-app-2lo6.onrender.com/tasks/${id}`,
                 {
                     headers:{
                         Authorization:token
@@ -214,7 +214,7 @@ function Dashboard() {
         try{
 
             await axios.put(
-                `http://localhost:5000/tasks/${id}`,
+                `https://task-tracker-app-2lo6.onrender.com/tasks/${id}`,
                 {
                     status
                 },
@@ -247,7 +247,7 @@ function Dashboard() {
         try{
 
             const res = await axios.post(
-                "http://localhost:5000/timelog/start",
+                "https://task-tracker-app-2lo6.onrender.com/timelog/start",
                 { taskId },
                 {
                     headers:{
@@ -271,7 +271,7 @@ function Dashboard() {
         try{
 
             await axios.post(
-                "http://localhost:5000/timelog/stop",
+                "https://task-tracker-app-2lo6.onrender.com/timelog/stop",
                 {
                     logId:activeLog._id
                 },
