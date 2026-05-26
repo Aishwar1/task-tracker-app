@@ -7,6 +7,7 @@ function Auth() {
     const navigate = useNavigate();
 
     const [isLogin, setIsLogin] = useState(true);
+    const [message, setMessage] = useState("");
 
     const [formData, setFormData] = useState({
         email:"",
@@ -16,10 +17,8 @@ function Auth() {
     const handleChange = (e)=>{
 
         setFormData({
-
             ...formData,
             [e.target.name]:e.target.value
-
         });
 
     };
@@ -28,12 +27,12 @@ function Auth() {
 
         e.preventDefault();
 
+        setMessage("");
+
         try{
 
             const url = isLogin
-
                 ? "https://task-tracker-app-2lo6.onrender.com/auth/login"
-
                 : "https://task-tracker-app-2lo6.onrender.com/auth/signup";
 
             const res = await axios.post(
@@ -50,17 +49,61 @@ function Auth() {
 
                 navigate("/dashboard");
 
+            }else{
+
+                setMessage(
+                    "Account created successfully. Please login."
+                );
+
+                setIsLogin(true);
+
             }
 
         }catch(error){
 
             console.log(error);
 
-            alert(
-                error?.response?.data?.message
-                ||
-                "Something went wrong"
-            );
+            const msg =
+                error?.response?.data?.message;
+
+            if(
+                msg==="User not found"
+            ){
+
+                setMessage(
+                    "No account found. Please register first."
+                );
+
+            }
+
+            else if(
+                msg==="Invalid credentials"
+            ){
+
+                setMessage(
+                    "Incorrect password."
+                );
+
+            }
+
+            else if(
+                msg==="User already exists"
+            ){
+
+                setMessage(
+                    "Account already exists. Please login."
+                );
+
+            }
+
+            else{
+
+                setMessage(
+                    msg ||
+                    "Something went wrong."
+                );
+
+            }
 
         }
     };
@@ -103,7 +146,7 @@ function Auth() {
                     style={{
                         color:"#94a3b8",
                         textAlign:"center",
-                        marginBottom:"30px"
+                        marginBottom:"25px"
                     }}
                 >
                     {
@@ -114,6 +157,26 @@ function Auth() {
                         "Create your account"
                     }
                 </p>
+
+                {
+
+                    message &&
+
+                    <div
+                        style={{
+                            background:"#374151",
+                            color:"#fbbf24",
+                            padding:"12px",
+                            borderRadius:"8px",
+                            marginBottom:"18px",
+                            textAlign:"center",
+                            fontSize:"14px"
+                        }}
+                    >
+                        {message}
+                    </div>
+
+                }
 
                 <form
                     onSubmit={handleSubmit}
@@ -183,9 +246,10 @@ function Auth() {
                 </form>
 
                 <p
-                    onClick={()=>
-                        setIsLogin(!isLogin)
-                    }
+                    onClick={()=>{
+                        setIsLogin(!isLogin);
+                        setMessage("");
+                    }}
                     style={{
                         marginTop:"25px",
                         color:"#60a5fa",
