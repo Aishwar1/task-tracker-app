@@ -9,25 +9,31 @@ function Auth() {
     const [isLogin, setIsLogin] = useState(true);
 
     const [formData, setFormData] = useState({
-        email: "",
-        password: ""
+        email:"",
+        password:""
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e)=>{
+
         setFormData({
+
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]:e.target.value
+
         });
+
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async(e)=>{
 
         e.preventDefault();
 
-        try {
+        try{
 
             const url = isLogin
+
                 ? "http://localhost:5000/auth/login"
+
                 : "http://localhost:5000/auth/signup";
 
             const res = await axios.post(
@@ -35,96 +41,171 @@ function Auth() {
                 formData
             );
 
-            console.log(res.data);
-
-            if (isLogin && res.data.token) {
+            if(res.data.token){
 
                 localStorage.setItem(
                     "token",
                     res.data.token
                 );
 
-                alert("Login Successful");
-
                 navigate("/dashboard");
-
-            } else {
-
-                alert("Signup Successful");
-
-                setIsLogin(true);
 
             }
 
-        } catch (error) {
+        }catch(error){
 
             console.log(error);
-            alert("Something went wrong");
+
+            alert(
+                error?.response?.data?.message
+                ||
+                "Something went wrong"
+            );
 
         }
     };
 
     return (
+
         <div
             style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh"
+                minHeight:"100vh",
+                background:"#111827",
+                display:"flex",
+                justifyContent:"center",
+                alignItems:"center",
+                fontFamily:"Arial"
             }}
         >
 
-            <form
-                onSubmit={handleSubmit}
+            <div
                 style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                    width: "300px"
+                    width:"420px",
+                    background:"#1f2937",
+                    padding:"40px",
+                    borderRadius:"18px",
+                    boxShadow:"0 10px 30px rgba(0,0,0,0.4)"
                 }}
             >
 
-                <h2>
-                    {isLogin ? "Login" : "Signup"}
-                </h2>
-
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                />
-
-                <button type="submit">
-                    {isLogin ? "Login" : "Signup"}
-                </button>
+                <h1
+                    style={{
+                        color:"white",
+                        marginBottom:"10px",
+                        textAlign:"center",
+                        fontSize:"32px"
+                    }}
+                >
+                    Task Tracker
+                </h1>
 
                 <p
                     style={{
-                        cursor: "pointer",
-                        color: "blue"
+                        color:"#94a3b8",
+                        textAlign:"center",
+                        marginBottom:"30px"
                     }}
-                    onClick={() =>
-                        setIsLogin(!isLogin)
-                    }
                 >
-                    {isLogin
-                        ? "Create account"
-                        : "Already have account?"}
+                    {
+                        isLogin
+                        ?
+                        "Login to continue"
+                        :
+                        "Create your account"
+                    }
                 </p>
 
-            </form>
+                <form
+                    onSubmit={handleSubmit}
+                    style={{
+                        display:"flex",
+                        flexDirection:"column",
+                        gap:"18px"
+                    }}
+                >
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        style={{
+                            padding:"14px",
+                            borderRadius:"10px",
+                            border:"none",
+                            outline:"none",
+                            background:"#374151",
+                            color:"white",
+                            fontSize:"15px"
+                        }}
+                    />
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        style={{
+                            padding:"14px",
+                            borderRadius:"10px",
+                            border:"none",
+                            outline:"none",
+                            background:"#374151",
+                            color:"white",
+                            fontSize:"15px"
+                        }}
+                    />
+
+                    <button
+                        type="submit"
+                        style={{
+                            background:"#2563eb",
+                            color:"white",
+                            border:"none",
+                            padding:"14px",
+                            borderRadius:"10px",
+                            cursor:"pointer",
+                            fontSize:"16px",
+                            fontWeight:"bold"
+                        }}
+                    >
+                        {
+                            isLogin
+                            ?
+                            "Login"
+                            :
+                            "Signup"
+                        }
+                    </button>
+
+                </form>
+
+                <p
+                    onClick={()=>
+                        setIsLogin(!isLogin)
+                    }
+                    style={{
+                        marginTop:"25px",
+                        color:"#60a5fa",
+                        textAlign:"center",
+                        cursor:"pointer"
+                    }}
+                >
+                    {
+                        isLogin
+                        ?
+                        "Don't have an account? Signup"
+                        :
+                        "Already have an account? Login"
+                    }
+                </p>
+
+            </div>
 
         </div>
+
     );
 }
 

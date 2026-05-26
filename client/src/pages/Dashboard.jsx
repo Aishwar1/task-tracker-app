@@ -28,9 +28,7 @@ function Dashboard() {
     };
 
     const fetchTasks = async () => {
-
         try {
-
             const res = await axios.get(
                 "http://localhost:5000/tasks",
                 {
@@ -39,13 +37,9 @@ function Dashboard() {
                     }
                 }
             );
-
             setTasks(res.data);
-
         } catch(error){
-
             console.log(error);
-
         }
     };
 
@@ -309,18 +303,43 @@ function Dashboard() {
 
     return (
 
-        <div style={{padding:"30px"}}>
+        <div
+            style={{
+                minHeight:"100vh",
+                background:"#111827",
+                color:"white",
+                padding:"30px",
+                fontFamily:"Arial"
+            }}
+        >
 
             <div
                 style={{
                     display:"flex",
                     justifyContent:"space-between",
-                    alignItems:"center"
+                    alignItems:"center",
+                    marginBottom:"30px"
                 }}
             >
-                <h1>Task Dashboard</h1>
+                <h1
+                    style={{
+                        fontSize:"34px"
+                    }}
+                >
+                    Productivity Dashboard
+                </h1>
 
-                <button onClick={logout}>
+                <button
+                    onClick={logout}
+                    style={{
+                        background:"#ef4444",
+                        color:"white",
+                        border:"none",
+                        padding:"10px 18px",
+                        borderRadius:"8px",
+                        cursor:"pointer"
+                    }}
+                >
                     Logout
                 </button>
             </div>
@@ -331,38 +350,47 @@ function Dashboard() {
 
                 <div
                     style={{
-                        display:"flex",
+                        display:"grid",
+                        gridTemplateColumns:"repeat(4,1fr)",
                         gap:"20px",
-                        marginBottom:"20px"
+                        marginBottom:"30px"
                     }}
                 >
 
                     <div style={{
-                        border:"1px solid black",
-                        padding:"10px"
+                        background:"#1f2937",
+                        padding:"20px",
+                        borderRadius:"12px"
                     }}>
-                        Tasks: {summary.totalTasks}
+                        <h3>Total Tasks</h3>
+                        <h2>{summary.totalTasks}</h2>
                     </div>
 
                     <div style={{
-                        border:"1px solid black",
-                        padding:"10px"
+                        background:"#065f46",
+                        padding:"20px",
+                        borderRadius:"12px"
                     }}>
-                        Completed: {summary.completed}
+                        <h3>Completed</h3>
+                        <h2>{summary.completed}</h2>
                     </div>
 
                     <div style={{
-                        border:"1px solid black",
-                        padding:"10px"
+                        background:"#92400e",
+                        padding:"20px",
+                        borderRadius:"12px"
                     }}>
-                        Pending: {summary.pending}
+                        <h3>Pending</h3>
+                        <h2>{summary.pending}</h2>
                     </div>
 
                     <div style={{
-                        border:"1px solid black",
-                        padding:"10px"
+                        background:"#1e3a8a",
+                        padding:"20px",
+                        borderRadius:"12px"
                     }}>
-                        Time: {formatTime(summary.totalTime)}
+                        <h3>Tracked Time</h3>
+                        <h2>{formatTime(summary.totalTime)}</h2>
                     </div>
 
                 </div>
@@ -373,19 +401,28 @@ function Dashboard() {
 
                 activeLog &&
 
-                <h2>
-                    Running:
+                <div
+                    style={{
+                        background:"#2563eb",
+                        padding:"15px",
+                        borderRadius:"10px",
+                        marginBottom:"20px"
+                    }}
+                >
+                    Running Timer:
                     {formatTime(elapsed)}
-                </h2>
+                </div>
 
             }
 
             <div
                 style={{
+                    background:"#1f2937",
+                    padding:"20px",
+                    borderRadius:"12px",
+                    marginBottom:"30px",
                     display:"flex",
-                    flexDirection:"column",
-                    gap:"10px",
-                    width:"300px"
+                    gap:"10px"
                 }}
             >
 
@@ -395,6 +432,12 @@ function Dashboard() {
                     onChange={(e)=>
                         setTitle(e.target.value)
                     }
+                    style={{
+                        flex:1,
+                        padding:"12px",
+                        borderRadius:"8px",
+                        border:"none"
+                    }}
                 />
 
                 <input
@@ -403,6 +446,12 @@ function Dashboard() {
                     onChange={(e)=>
                         setDescription(e.target.value)
                     }
+                    style={{
+                        flex:2,
+                        padding:"12px",
+                        borderRadius:"8px",
+                        border:"none"
+                    }}
                 />
 
                 <button
@@ -411,26 +460,29 @@ function Dashboard() {
                         ? updateTask
                         : createTask
                     }
+                    style={{
+                        background:"#2563eb",
+                        color:"white",
+                        border:"none",
+                        padding:"12px 20px",
+                        borderRadius:"8px",
+                        cursor:"pointer"
+                    }}
                 >
                     {
                         editingId
-                        ? "Update Task"
+                        ? "Update"
                         : "Add Task"
                     }
                 </button>
 
             </div>
 
-            <hr/>
-
-            <h2>Your Tasks</h2>
-
             <div
                 style={{
                     display:"grid",
                     gridTemplateColumns:"repeat(4,1fr)",
-                    gap:"20px",
-                    marginTop:"20px"
+                    gap:"20px"
                 }}
             >
 
@@ -441,17 +493,21 @@ function Dashboard() {
                         <div
                             key={task._id}
                             style={{
-                                border:"1px solid black",
-                                padding:"15px",
-                                borderRadius:"10px",
-                                minHeight:"230px",
-                                boxSizing:"border-box"
+                                background:"#1f2937",
+                                padding:"20px",
+                                borderRadius:"12px"
                             }}
                         >
 
                             <h3>{task.title}</h3>
 
-                            <p>{task.description}</p>
+                            <p
+                                style={{
+                                    color:"#cbd5e1"
+                                }}
+                            >
+                                {task.description}
+                            </p>
 
                             <select
                                 value={task.status}
@@ -461,34 +517,59 @@ function Dashboard() {
                                         e.target.value
                                     )
                                 }
+                                style={{
+                                    width:"100%",
+                                    padding:"10px",
+                                    borderRadius:"8px",
+                                    marginBottom:"15px"
+                                }}
                             >
                                 <option>Pending</option>
                                 <option>In Progress</option>
                                 <option>Completed</option>
                             </select>
 
-                            <br/><br/>
-
-                            <button
-                                onClick={()=>
-                                    startEdit(task)
-                                }
-                            >
-                                Edit
-                            </button>
-
-                            <button
+                            <div
                                 style={{
-                                    marginLeft:"10px"
+                                    display:"flex",
+                                    gap:"10px",
+                                    marginBottom:"10px"
                                 }}
-                                onClick={()=>
-                                    deleteTask(task._id)
-                                }
                             >
-                                Delete
-                            </button>
 
-                            <br/><br/>
+                                <button
+                                    onClick={()=>
+                                        startEdit(task)
+                                    }
+                                    style={{
+                                        flex:1,
+                                        background:"#2563eb",
+                                        color:"white",
+                                        border:"none",
+                                        padding:"10px",
+                                        borderRadius:"8px"
+                                    }}
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    onClick={()=>
+                                        deleteTask(task._id)
+                                    }
+                                    style={{
+                                        flex:1,
+                                        background:"#dc2626",
+                                        color:"white",
+                                        border:"none",
+                                        padding:"10px",
+                                        borderRadius:"8px"
+                                    }}
+                                >
+                                    Delete
+                                </button>
+
+                            </div>
 
                             {
 
@@ -497,8 +578,18 @@ function Dashboard() {
 
                                 ?
 
-                                <button onClick={stopTimer}>
-                                    Stop
+                                <button
+                                    onClick={stopTimer}
+                                    style={{
+                                        width:"100%",
+                                        background:"#f59e0b",
+                                        color:"white",
+                                        border:"none",
+                                        padding:"10px",
+                                        borderRadius:"8px"
+                                    }}
+                                >
+                                    Stop Timer
                                 </button>
 
                                 :
@@ -507,8 +598,16 @@ function Dashboard() {
                                     onClick={()=>
                                         startTimer(task._id)
                                     }
+                                    style={{
+                                        width:"100%",
+                                        background:"#16a34a",
+                                        color:"white",
+                                        border:"none",
+                                        padding:"10px",
+                                        borderRadius:"8px"
+                                    }}
                                 >
-                                    Start
+                                    Start Timer
                                 </button>
 
                             }
@@ -521,9 +620,13 @@ function Dashboard() {
 
             </div>
 
-            <hr/>
-
-            <h2>Time Logs</h2>
+            <h2
+                style={{
+                    marginTop:"40px"
+                }}
+            >
+                Time Logs
+            </h2>
 
             {
 
@@ -532,19 +635,22 @@ function Dashboard() {
                     <div
                         key={log._id}
                         style={{
-                            border:"1px solid gray",
-                            padding:"10px",
+                            background:"#1f2937",
+                            padding:"15px",
+                            borderRadius:"10px",
                             marginTop:"10px"
                         }}
                     >
 
                         <p>
-                            Task:
                             {log.taskId?.title}
                         </p>
 
-                        <p>
-                            Duration:
+                        <p
+                            style={{
+                                color:"#94a3b8"
+                            }}
+                        >
                             {formatTime(log.duration)}
                         </p>
 

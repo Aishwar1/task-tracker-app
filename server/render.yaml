@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: task-tracker-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: node app.js
